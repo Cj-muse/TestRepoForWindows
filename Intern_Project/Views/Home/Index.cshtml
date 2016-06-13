@@ -1,0 +1,64 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <script src="~/Scripts/jquery-2.2.3.min.js"></script>
+</head>
+<body>
+    <div id="testdiv">
+        Hello World!
+    </div>
+
+    <form id="Ballot">
+        <input type="radio" name="vote" value="yes" /> Yes<br>
+        <input type="radio" name="vote" value="no"> No<br>
+        <input type="radio" name="vote" value="other"> Other
+        <button type="submit" onclick="submitVote()">Vote</button>
+    </form>
+
+    <!--Javascript -->
+    <script>
+        var voteValue;
+
+        function submitVote() {
+            
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                
+                if (xhttp.readyState === 4 && xhttp.status === 200) {
+                    //alert(xhttp.responseText);
+                    //document.getElementById("testdiv").innerHTML = xhttp.responseText;
+                    document.getElementById("testdiv").innerHTML = "Deductions";
+                }
+
+            };
+
+            xhttp.open("GET", "/Home/Test?vote=" + voteValue, true);
+            xhttp.send();
+            //$(this).ajax({url: "/Home/Test/"});
+        }
+
+        function submitVote1() {
+            $.ajax({
+                url: "/Home/Test", success: function (result) {
+                    $("#testdiv").html(result);
+                }
+            });
+        }
+
+        $('input').click(function () {
+            voteValue = $(this).val();
+            vote();
+        });
+
+        function vote() {
+            alert(voteValue);
+        };
+
+    </script>
+
+</body>
+</html>
